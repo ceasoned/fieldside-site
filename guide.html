@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fieldside Coach Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one readable column like a coach's handbook; stopwatch-style figures for times; sections follow the season (before, race day, practice, track, after). */
+:root {
+  --bg: #f6f8f6;
+  --surface: #ffffff;
+  --ink: #17221b;
+  --muted: #56645b;
+  --line: #d9e1db;
+  --accent: #0b6b34;      /* infield green, same as the app */
+  --accent-soft: #e3f1e8;
+  --signal: #c2570c;      /* MARK orange */
+  --signal-soft: #fbeadd;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-time: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1511; --surface: #18211b; --ink: #e5ece7; --muted: #9db0a3; --line: #2b3a30;
+    --accent: #4cc27c; --accent-soft: #1c3325; --signal: #f2954a; --signal-soft: #3a2616;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1511; --surface: #18211b; --ink: #e5ece7; --muted: #9db0a3; --line: #2b3a30;
+  --accent: #4cc27c; --accent-soft: #1c3325; --signal: #f2954a; --signal-soft: #3a2616;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-inline: 16px;
+  padding-block: 0 64px;
+}
+.wrap { max-width: 760px; margin-inline: auto; display: grid; gap: 48px; }
+
+header { padding-block: 40px 8px; display: grid; gap: 14px; border-bottom: 3px solid var(--accent); padding-bottom: 28px; }
+.eyebrow {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; font-size: 15px; color: var(--accent);
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(44px, 9vw, 68px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 34px; font-weight: 700; }
+h3 { font-size: 22px; font-weight: 700; letter-spacing: 0.01em; }
+p { margin: 0; max-width: 65ch; }
+.lede { font-size: 20px; color: var(--muted); }
+.status { font-size: 15px; color: var(--muted); }
+
+.clock {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px;
+  font-family: var(--font-time); font-variant-numeric: tabular-nums;
+}
+.clock .big { font-size: clamp(40px, 10vw, 60px); font-weight: 600; letter-spacing: -0.02em; }
+.splits { display: flex; flex-wrap: wrap; gap: 8px; }
+.split {
+  font-family: var(--font-time); font-size: 14px; font-weight: 600;
+  padding: 4px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line);
+}
+.split.on { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+section { display: grid; gap: 20px; }
+.chapter {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 16px; color: var(--bg); background: var(--accent); justify-self: start;
+  padding: 3px 12px; border-radius: 6px;
+}
+.section-head { display: grid; gap: 6px; }
+.section-head .chapter { justify-self: start; margin-bottom: 4px; }
+.section-head .when {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; font-size: 14px; color: var(--muted);
+}
+
+.features { display: grid; gap: 16px; }
+.feature { display: grid; gap: 6px; padding-block: 4px; }
+.feature ul, .feature ol { margin: 2px 0 0; padding-left: 20px; display: grid; gap: 4px; max-width: 62ch; }
+.feature li::marker { color: var(--accent); }
+
+.capture { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 620px) { .capture { grid-template-columns: 1fr; } }
+.way { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.way .tag {
+  justify-self: start; font-family: var(--font-display); font-weight: 800; letter-spacing: 0.06em;
+  font-size: 18px; padding: 2px 10px; border-radius: 6px;
+}
+.tag.name { background: var(--accent-soft); color: var(--accent); }
+.tag.mark { background: var(--signal-soft); color: var(--signal); }
+.tag.photo { background: var(--line); color: var(--ink); }
+.way p { font-size: 16px; }
+.way .note { font-size: 14px; color: var(--muted); }
+
+.callout {
+  background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; display: grid; gap: 6px;
+}
+.callout strong { font-family: var(--font-display); font-size: 19px; letter-spacing: 0.02em; }
+
+/* Two phones: a simple course diagram with who stands where */
+.course {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px 14px;
+  display: grid; gap: 12px;
+}
+.course-line { position: relative; height: 6px; background: var(--line); border-radius: 3px; margin: 34px 8px 30px; }
+.course-line .pt { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--muted); }
+.course-line .pt.a { border-color: var(--accent); background: var(--accent); }
+.course-line .pt.b { border-color: var(--signal); background: var(--signal); }
+.course-line .lbl { position: absolute; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-time); font-size: 13px; font-weight: 600; }
+.course-line .lbl.top { bottom: 16px; }
+.course-line .lbl.bot { top: 16px; color: var(--muted); font-family: var(--font-body); font-weight: 600; font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 15px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+/* A small spreadsheet, for the PR Board and the Add Results tab */
+.sheet-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+table.sheet { border-collapse: collapse; width: 100%; font-size: 14px; }
+.sheet th, .sheet td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; white-space: nowrap; }
+.sheet th { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.04em; font-size: 15px; color: var(--muted); background: var(--accent-soft); }
+.sheet td.t, .sheet td.num { font-family: var(--font-time); font-variant-numeric: tabular-nums; }
+.sheet td.base { color: var(--muted); }
+.sheet td.x { color: var(--accent); font-weight: 700; }
+.sheet td.alt { color: var(--signal); font-weight: 700; }
+.sheet tr:last-child td { border-bottom: 0; }
+.sheet .ok { color: var(--accent); font-weight: 600; }
+.sheet .warn { color: var(--signal); font-weight: 600; }
+.caption { font-size: 14px; color: var(--muted); }
+
+/* Sharing between coaches: a left-to-right flow (stacks on phones) */
+.flow { display: grid; grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1.15fr) 92px minmax(0, 1fr); align-items: center; gap: 0; }
+.node { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 6px; align-content: start; min-height: 100%; }
+.node.head { border-color: var(--accent); }
+.node.sheet { border-color: #188038; background: var(--accent-soft); }
+.node.assistant { border-color: var(--signal); }
+.node .who { font-family: var(--font-display); font-weight: 800; letter-spacing: 0.04em; font-size: 19px; line-height: 1.1; }
+.node.head .who { color: var(--accent); }
+.node.assistant .who { color: var(--signal); }
+.node p, .node li { font-size: 14.5px; }
+.node ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+.tabs span { font-size: 12.5px; font-weight: 600; padding: 2px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); }
+.tabs span.edit { border-color: var(--signal); color: var(--signal); }
+.tabs span.hid { border-style: dashed; color: var(--muted); }
+.arrows { display: grid; gap: 14px; justify-items: center; padding: 0 4px; }
+.arrow { display: grid; justify-items: center; gap: 2px; font-size: 12.5px; font-weight: 700; text-align: center; line-height: 1.2; }
+.arrow .line { font-size: 26px; line-height: 1; font-weight: 400; }
+.arrow.green { color: var(--accent); }
+.arrow.orange { color: var(--signal); }
+.arrow .v { display: none; }
+.below { display: grid; grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1.15fr) 92px minmax(0, 1fr); margin-top: 10px; }
+.below .typist { grid-column: 3; display: grid; justify-items: center; gap: 4px; text-align: center; }
+.below .typist .arrow { color: var(--signal); }
+.typist .card { background: var(--surface); border: 1px dashed var(--signal); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+@media (max-width: 680px) {
+  .flow, .below { grid-template-columns: 1fr; }
+  .arrows { grid-auto-flow: column; padding: 8px 0; gap: 26px; }
+  .arrow .h { display: none; }
+  .arrow .v { display: inline; }
+  .below .typist { grid-column: 1; }
+}
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; counter-reset: step; }
+@media (max-width: 620px) { .steps { grid-template-columns: 1fr; } }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.step .num { font-family: var(--font-display); font-weight: 800; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; }
+.step.head .num { color: var(--accent); }
+.step.assistant .num { color: var(--signal); }
+.step p, .step li { font-size: 15px; }
+.step ol { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+
+.trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+@media (max-width: 620px) { .trust { grid-template-columns: 1fr; } }
+.trust div { display: grid; gap: 2px; border-top: 1px solid var(--line); padding-top: 10px; }
+.trust b { font-weight: 700; }
+.trust span { color: var(--muted); font-size: 16px; }
+
+.road { display: grid; gap: 10px; }
+.road-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 4px 18px; border-top: 1px solid var(--line); padding-top: 12px; }
+@media (max-width: 520px) { .road-row { grid-template-columns: 1fr; } }
+.road-row .label { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 15px; color: var(--accent); padding-top: 2px; }
+.road-row ul { margin: 0; padding-left: 20px; display: grid; gap: 3px; }
+
+.t { font-family: var(--font-time); font-variant-numeric: tabular-nums; font-size: 0.92em; white-space: nowrap; }
+footer { color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); padding-top: 18px; }
+
+.sitenav { margin: 16px 0 0; font-size: 15px; }
+@media print {
+  .sitenav { display: none; }
+  body { font-size: 14.5px; padding-block: 0; }
+  .wrap { gap: 30px; }
+  header { padding-top: 0; }
+  section { break-inside: auto; }
+  .feature, .way, .callout, .course, .trust div, .road-row, .sheet-wrap, .flow, .below, .step { break-inside: avoid; }
+  .flow { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1.15fr) 70px minmax(0, 1fr); }
+  .below { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1.15fr) 70px minmax(0, 1fr); }
+  .node p, .node li, .step p, .step li { font-size: 12.5px; }
+  h2, h3, .section-head { break-after: avoid; }
+  .new-page { break-before: page; }
+  .sheet-wrap { overflow: visible; }
+  .sheet th, .sheet td { padding: 5px 7px; font-size: 12.5px; }
+  /* Chrome's print layout overlaps grid items across page breaks, so print uses plain blocks. */
+  .wrap, section, .features, .feature, .section-head, .callout { display: block; }
+  .chapter { display: inline-block; margin-bottom: 10px; }
+  section { margin-bottom: 30px; }
+  .section-head { margin-bottom: 16px; break-inside: avoid; }
+  .section-head > * + *, .feature > * + *, .callout > * + * { margin-top: 6px; }
+  .features > * + *, section > * + * { margin-top: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="sitenav"><a href="index.html">&larr; fieldsidetrack.com</a> &middot; <a href="Fieldside-Coach-Guide.pdf">Download the PDF</a></p>
+  <header>
+    <div class="eyebrow">For coaches · iPhone · XC &amp; Track and Field</div>
+    <h1>Fieldside</h1>
+    <p class="lede">A stopwatch, clipboard, and results sheet in one phone. Time cross country races and practice workouts, bring in track meet results, and the app keeps every athlete's history, PRs, and rankings for you.</p>
+    <div class="clock" aria-hidden="true">
+      <span class="big">18:42.31</span>
+      <div class="splits">
+        <span class="split">1 mi 5:58.40</span>
+        <span class="split">2 mi 12:09.77</span>
+        <span class="split on">Finish</span>
+      </div>
+    </div>
+    <p class="status">Status: in beta on TestFlight as <b>Fieldside Track and XC</b>. Cross country timing has been used at real races; track and field and Google Sheets are new. This guide describes what works today and what is coming.</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <div class="when">Before the season</div>
+      <h2>Set up your team once</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>Roster</h3>
+        <ul>
+          <li>Each athlete has a name, gender, level (Varsity, JV, or your own levels), grad year, bib number, team, and optional photo.</li>
+          <li>Filter by level, gender, or team in one tap, here and anywhere you pick athletes: choose "Varsity girls" and then pick from that list. Archive athletes who leave without losing their results.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Import from a spreadsheet</h3>
+        <ul>
+          <li>Export your roster from Excel, Numbers, or Google Sheets as CSV and open it in the app. Columns are matched for you.</li>
+          <li>A review screen flags problems (a missing name, an unreadable time) before anything is saved. Athletes already on the roster are updated, not duplicated.</li>
+          <li>Include last season's bests as <b>baseline PRs</b> (for example a <span class="t">PR 5K</span> or <span class="t">PR Long Jump</span> column) so records mean something from day one. Track coaches can bring in a whole PR spreadsheet; see <a href="#track-records">Track records</a>.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Seasons, courses, and meets</h3>
+        <ul>
+          <li>Create seasons such as "Fall 2026 XC" or "Spring 2027 Track" to track season records.</li>
+          <li>Save the cross country courses you race on with their split points, for example Home 5K timed at 1 mi and 2 mi. Each race keeps its own copy, so editing a course later never changes past results.</li>
+          <li>A meet can hold its location (with a <b>Directions</b> button for Maps) and the link to its <b>official results website</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="when">Race day · cross country</div>
+      <h2>Time a meet from one phone</h2>
+      <p>Create a meet, add its races (Varsity Girls, JV Boys…), pick the runners, and start.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Starting the clock</h3>
+        <ul>
+          <li><b>Tap START</b> on the gun, or <b>arm the horn or gun start</b> and the clock begins the instant the sound is heard. Sensitivity goes from Low to Maximum for a far-away start.</li>
+          <li>Standing away from the start? Enter your distance and the app corrects for the sound's travel time. At 100 m that is about <span class="t">0.29</span> seconds.</li>
+          <li><b>False start?</b> For the first 90 seconds a red <b>False Start</b> button sits at the top of the screen. One tap puts the clock back to zero, and on a horn start the microphone starts listening again for the restart.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="capture">
+      <div class="way">
+        <span class="tag name">TAP A NAME</span>
+        <p>Every runner has a big button. Tap it as they pass. The time is taken the moment your finger lands, and the button flashes green with the split and time.</p>
+        <p class="note">After the first split, buttons are ordered by each runner's time at the previous split, so the leaders are at the top.</p>
+      </div>
+      <div class="way">
+        <span class="tag mark">MARK</span>
+        <p>A pack coming through? Hit MARK for each runner and add the names a moment later. Waiting times line up at the top of the screen.</p>
+      </div>
+      <div class="way">
+        <span class="tag photo">PHOTO</span>
+        <p>Switch to the camera and tap the shutter. The time is taken at the tap, and the photo is saved with it so you can zoom in and match the runner later.</p>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Splits</h3>
+        <ul>
+          <li>The split you're timing (<span class="t">1 mi → 2 mi → Finish</span>) shows at the top. Every time is tagged with that split.</li>
+          <li>When every runner still in the race has a time, the screen moves to the next split and offers Undo. You can also jump to any split yourself, or skip one.</li>
+          <li>Runner buttons never move around while you're tapping. Timed runners just dim in place.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Things go wrong. That's fine.</h3>
+        <ul>
+          <li>Mark a runner <b>DNF</b> if they drop out. Add an <b>unknown runner</b> for someone not on your list and sort them out after.</li>
+          <li>Undo the last time, change who a time belongs to, or move times to a different split, one at a time or in a group.</li>
+          <li>Can't get back to the finish? <b>Stop Recording</b> keeps everything you captured. Nothing is ever guessed or filled in for you.</li>
+          <li>Need a do-over? <b>Restart Race</b> during a race, <b>Reset Race</b> after it, or <b>Reset All Races</b> for a whole meet.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Review, then complete</strong>
+      <p>After the race, the app shows what's missing, for example "7 finishes missing". Fix what you can, then mark the race complete whenever you're ready, even with gaps. The race keeps a small "not fully recorded" note until the gaps are filled.</p>
+    </div>
+  </section>
+
+  <section class="new-page">
+    <div class="section-head">
+      <div class="when">Race day · two coaches</div>
+      <h2>Two phones, one race</h2>
+      <p>One coach times the start and the splits, an assistant times the finish on their own phone. Afterward the two recordings combine into one complete race.</p>
+    </div>
+
+    <div class="course" aria-label="Example: Coach A at the start, 1 mile, and 2 miles; the assistant at the finish">
+      <div class="course-line">
+        <span class="pt a" style="left:0%"></span><span class="lbl top" style="left:0%">Start</span><span class="lbl bot" style="left:0%">Coach A</span>
+        <span class="pt a" style="left:32%"></span><span class="lbl top" style="left:32%">1 mi</span><span class="lbl bot" style="left:32%">Coach A</span>
+        <span class="pt a" style="left:64%"></span><span class="lbl top" style="left:64%">2 mi</span><span class="lbl bot" style="left:64%">Coach A</span>
+        <span class="pt b" style="left:100%"></span><span class="lbl top" style="left:100%">Finish</span><span class="lbl bot" style="left:100%">Assistant</span>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>Coach A's phone</span>
+        <span><i style="background:var(--signal)"></i>Assistant's phone</span>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Before the race: line up the clocks</h3>
+        <p>Set up the race on both phones (same race, same runners), then pick one:</p>
+      </div>
+    </div>
+
+    <div class="capture">
+      <div class="way">
+        <span class="tag name">BOTH START</span>
+        <p>Both coaches start their clocks at the gun, by tap or horn start. The times already match.</p>
+        <p class="note">Best choice when both can hear the gun.</p>
+      </div>
+      <div class="way">
+        <span class="tag mark">SYNC TAP</span>
+        <p>Assistant too far away to hear the gun? Stand together before the race, open the start screen, count "3, 2, 1", and both tap <b>SYNC</b>.</p>
+        <p class="note">Exact, even though their clock never starts at the gun.</p>
+      </div>
+      <div class="way">
+        <span class="tag photo">TIME OF DAY</span>
+        <p>No shared start and no sync? The app lines up the phones' clocks. Usually within a fraction of a second.</p>
+        <p class="note">Marked "approximate" and left out of PRs unless you allow it.</p>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>After the race: share and merge</h3>
+        <ol>
+          <li>The assistant opens the race and taps <b>Share Recording</b>, then sends it by AirDrop, Messages, or email.</li>
+          <li>Tap the file. The app suggests the matching race (same day, same runners). Or, from the race, tap <b>Merge Another Phone's Recording…</b></li>
+          <li>Check the preview. Nothing is saved until you tap Merge.</li>
+          <li>Tap <b>Merge</b>. Places, pace, and PRs update, and merged times carry a small "merged" label.</li>
+        </ol>
+      </div>
+      <div class="feature">
+        <h3>What the preview shows</h3>
+        <ul>
+          <li><b>Runners</b> matched by name, then bib number. Runners not on your phone are added to your roster. Change any match that's wrong.</li>
+          <li><b>Both phones have a time</b> for the same runner and split? You choose yours or theirs. Yours is kept unless you pick theirs.</li>
+          <li><b>Times to add</b> by runner, with a warning if any would end up out of order.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Mistake? Undo it.</strong>
+      <p><b>Undo Merge</b> removes the merged times and puts back any of yours they replaced, until you mark the race complete. Merging the same file twice adds nothing new.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="when">Practice</div>
+      <h2>Time a workout</h2>
+      <p>One <b>Practice</b> card on the Home screen times sprints and repeats for the whole group.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>Plan it, or build it as you go</h3>
+        <ul>
+          <li><b>Planned workout:</b> add sets, each with a number of reps, a distance (40 m to 1600 m, yards, or custom) or a fly rep, and the rest between reps. Add a longer rest between sets. For example <span class="t">3 × 200 m, 2:00 rest</span> then <span class="t">4 × 100 m, 1:00 rest</span>, with 4:00 between sets.</li>
+          <li><b>Save</b> a workout you'll use again and start it in one tap next time.</li>
+          <li><b>Ad hoc:</b> pick each rep's distance as you go, change the rest mid-practice, and tap <b>Finish</b> when you're done.</li>
+          <li><b>Fly reps</b>: set a run-in and a timed distance, for example Fly 30m with a 20m run-in. Fly reps start with a tap, and fly times keep their own records.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>During practice</h3>
+        <ul>
+          <li>The screen shows where you are, such as <span class="t">Set 2 of 3 · Rep 1 of 2</span>, and during the longer rest it previews the next set.</li>
+          <li>A rest countdown runs between reps. When rest is over the phone sends a notification, even if it's in your pocket or locked. Choose sound, vibration, or off under <b>Settings → Rest Alert</b>.</li>
+          <li>A summary shows every rep for every athlete, set by set, with averages and the fastest and slowest rep. Export it as a spreadsheet.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>The practice workbook and sheet</h3>
+        <ul>
+          <li><b>Sessions → Export → Export Practice Workbook</b> (or the table button on the Practice screen) makes one Excel file of this season's practice.</li>
+          <li><b>Practice Bests</b>: each athlete's best rep at every distance, with its date. <b>Weekly Mileage</b>: miles each runner ran in timed sessions each week, counting cross country runs and races and every practice rep. <b>Athlete History</b>: one row per athlete per workout, with every rep, the best, and the average.</li>
+          <li>Then a tab for each week, newest first. Each workout is a block with every athlete's reps. A gray time was left out of records, such as a false start, and isn't in the best or average.</li>
+          <li><b>Practice Google Sheet</b> keeps the same tabs up to date in your Drive, as its own sheet, separate from the meet sheets. Sign in, tap <b>Start My Team's Sheet</b>, and share it with Google's Share button. It's one way: there's no Add Results tab, and other coaches open it in Google Sheets instead of connecting their app.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Practice times never count as PRs</strong>
+      <p>Each athlete's best practice rep is kept separately as their <b>Practice Best</b>, so you can see how practice compares with meets without mixing them up.</p>
+    </div>
+  </section>
+
+  <section class="new-page" id="track">
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Meets</div>
+      <h2>Track meets and results</h2>
+      <p>Open the <b>Track &amp; Field</b> card on the Home screen. Running events, hurdles, steeplechase, relays, jumps, throws, and multi-events are all built in, and you can add your own events.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>A meet</h3>
+        <ul>
+          <li>Create a track meet with its date and location, and mark it <b>Indoor</b> if it is.</li>
+          <li>See the team's results <b>by event</b> (like the meet program) or <b>by athlete</b>, with places, rounds, and relay legs.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Typing in results</h3>
+        <ul>
+          <li>Pick an event and type each athlete's time or mark. One screen per event, fast to fill in.</li>
+          <li>Times like <span class="t">12.84</span> or <span class="t">2:05.31</span>; field marks in feet and inches like <span class="t">18-04.5</span>; or metric like <span class="t">5.60m</span>. Type <b>DNF</b>, <b>DQ</b>, <b>NH</b>, or <b>FOUL</b> for results without a mark.</li>
+          <li>Each result can carry <b>FAT or Hand</b>, wind, place, and round (prelim, semi, final).</li>
+          <li><b>Relays</b> have four legs, each with its runner and an optional split.</li>
+          <li>Typed results are <b>preliminary</b> and get a <b>*</b> in the Google Sheet. Turn on <b>From Official Results</b> when you're copying them from the meet's posted results.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="when">Results from the meet</div>
+      <h3>Bring results in instead of typing them</h3>
+    </div>
+    <div class="capture">
+      <div class="way">
+        <span class="tag name">PDF</span>
+        <p>Open or share a meet's results PDF (the common Hy-Tek printout) or a <b>MileSplit team results</b> printout. The app reads it on the phone and finds your school's athletes.</p>
+        <p class="note">List every way your school is printed, such as the full name and a short code like "PJPI" for relays.</p>
+      </div>
+      <div class="way">
+        <span class="tag mark">PASTE</span>
+        <p>Copy the results text from a web page or email and paste it in. Same reading and matching as a PDF.</p>
+      </div>
+      <div class="way">
+        <span class="tag photo">CSV</span>
+        <p>A results spreadsheet with columns like Event, Name, Mark, Place, and Wind. Columns are matched for you.</p>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <ul>
+          <li>Every import shows a preview first: who matched the roster, what couldn't be read, and other schools' rows skipped.</li>
+          <li>Importing the same results again updates them instead of adding them twice.</li>
+          <li>Results PDFs often list only the school for a relay. Relays brought in without runners are listed so you can add the legs.</li>
+          <li>Heat sheets are programs, not results, so they aren't imported.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="track-records">
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Records</div>
+      <h2>PRs, the PR Board, and rankings</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>How track PRs work</h3>
+        <ul>
+          <li>Every athlete has a <b>Season PR</b> and an <b>All-time PR</b> in every event. Lower is better for times; higher is better for jumps, throws, and points.</li>
+          <li><b>FAT and hand times are labeled, never converted.</b> A hand time shows as <span class="t">11.4h</span>.</li>
+          <li><b>Wind-aided</b> marks (over +2.0 m/s, or marked "w") don't count as PRs. Indoor and outdoor marks share one PR list, and indoor marks show an <b>i</b>.</li>
+          <li>Leave a result out of PRs if the timing was off. Practice reps count only as Practice Best.</li>
+          <li>Each athlete's profile groups records into Track, Field, Relays, Cross Country, and Practice, with a progress chart for every event. <b>Team Bests</b> lists the best on the team in each event.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>PR Board</h3>
+        <p>Your season spreadsheet, kept for you: every athlete down the side, every event across. Switch between Season PR, All-time PR, and Practice Best, and filter by level, gender, or team.</p>
+      </div>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet" aria-label="Example PR Board">
+        <thead><tr><th>Athlete</th><th>4x1</th><th>4x4</th><th>100</th><th>400</th><th>LJ</th></tr></thead>
+        <tbody>
+          <tr><td>Alvarez, Maya</td><td class="x">X</td><td class="alt">ALT</td><td class="num">12.61</td><td class="num">1:01.40</td><td class="num">16-08.75</td></tr>
+          <tr><td>Chen, Ava</td><td class="x">X</td><td class="x">X</td><td class="num base">13.10</td><td class="num">59.87</td><td></td></tr>
+          <tr><td>Evans, Sofia</td><td></td><td class="x">X</td><td></td><td class="num">1:03.22i</td><td class="num">15-02.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Gray marks are baseline PRs that no meet result has beaten yet; <b>i</b> is indoor. Tap a relay cell to cycle X (in the pool), ALT (alternate), and clear. Tap a mark for that athlete's history in the event.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>Rankings</h3>
+        <ul>
+          <li>Everyone ranked in one event, best first, by gender, with how far each athlete is behind the one above.</li>
+          <li>Rank <b>as of any meet</b> to see the order on that day. ▲▼ shows movement since the meet before, and NEW marks a first result.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Bring in your season spreadsheet</h3>
+        <ul>
+          <li><b>Track &amp; Field → Import Season Spreadsheet</b> reads the PR spreadsheet you already keep: an Excel (.xlsx) or CSV file with one row per athlete and one column per event.</li>
+          <li>It finds name, gender, and grade columns and event columns like <span class="t">100</span>, <span class="t">1600</span>, <span class="t">100/110H</span>, <span class="t">LJ</span>, <span class="t">SP</span>, or <span class="t">PENT</span>. X and ALT in relay columns become relay pools.</li>
+          <li>Marks come in as baseline Season PRs, so meet results beat them as the season goes on. Athletes not on the roster can be added. Importing again updates instead of duplicating.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Before a meet</div>
+      <h2>Stack a meet</h2>
+      <p>Open a meet and tap <b>Entries</b> to decide who runs what.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <ul>
+          <li>Set the limits: entries per event (3 by default) and events per athlete (4 by default).</li>
+          <li>Mark athletes who can't compete, with a reason: Injured, Sick, Other sport, Cut, or Absent. They're taken out of the stack.</li>
+          <li><b>Suggest Entries</b> fills every event from the rankings. The best athletes are placed first across all events, so a top athlete gets their strongest events. Relays take their X pool, with ALT runners as alternates, which don't count toward an athlete's limit.</li>
+          <li>Change anything by hand. Each event lists everyone ranked by seed, with athletes who have no mark yet at the bottom. Hand entries are kept when you suggest again.</li>
+          <li><b>Export</b> the entries with seeds, in meet-program order, for the meet director or the bus list.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Sharing</div>
+      <h2>Excel and Google Sheets</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>Excel files</h3>
+        <ul>
+          <li><b>Export Season Workbook</b> on the Track &amp; Field screen makes one Excel file with the PR Board, a Relays sheet, Girls and Boys Rankings, and a sheet for each meet this season.</li>
+          <li>The PR Board sheet is for individual events. The <b>Relays</b> sheet lists every relay this season by event, fastest first, with its time, meet, place, and the four runners in leg order (with splits when you have them). SB marks the season best.</li>
+          <li>The PR Board, Rankings, and each meet also export on their own, as Excel or CSV. Meet sheets mark <b>PR</b> (lifetime best) and <b>SB</b> (season best).</li>
+          <li>The PR Board sheet uses the same name and grade columns as your season spreadsheet, so you can edit PRs and bring them back in with Import Season Spreadsheet. Relay pools (X and ALT) are set on the app's PR Board.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Google Sheets</h3>
+        <ul>
+          <li><b>Track &amp; Field → Google Sheets → Sign In with Google → Start My Team's Sheet</b>. Fieldside creates a sheet in your Google Drive and keeps it up to date: when you tap <b>Sync Now</b>, and automatically when you leave the app if anything changed and the phone is online.</li>
+          <li>Fieldside can only see files it creates, not the rest of your Drive.</li>
+          <li>Share the sheet with athletes, parents, and assistants using Google's own <b>Share</b> button. It holds athletes' names and results, so share it only with people who should see them.</li>
+          <li>The sheet's tabs: <b>How to Use</b>, <b>Add Results</b>, <b>PR Board</b>, <b>Relays</b>, <b>Girls Rankings</b>, <b>Boys Rankings</b>, and one tab per meet.</li>
+          <li>The app is the source: every tab except Add Results is rewritten on each sync, so changes typed there are replaced. <b>Start a New Sheet</b> each season to keep last season's sheet as it was.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Assistant coaches</div>
+      <h2>Results from the sheet's Add Results tab</h2>
+      <p>Assistants don't need the app. Share the Google Sheet with them (with edit access) and they type results into the <b>Add Results</b> tab. Fieldside never overwrites that tab, and nothing comes into the app until you've checked it. The sheet's <b>How to Use</b> tab explains all of this for them.</p>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet" aria-label="Example Add Results tab">
+        <thead><tr><th>Status</th><th>Date</th><th>Meet</th><th>Event</th><th>Athlete</th><th>Mark</th><th>FAT/Hand</th><th>Place</th><th>Entered By</th></tr></thead>
+        <tbody>
+          <tr><td class="ok">Imported ✓ Apr 12</td><td class="num">4/12/2027</td><td>Region</td><td>100m</td><td>Maya Alvarez</td><td class="num">12.61</td><td>FAT</td><td class="num">2</td><td>LD</td></tr>
+          <tr><td>Waiting for coach review</td><td class="num">4/12/2027</td><td>Region</td><td>4x400 Relay</td><td>Girls A</td><td class="num">4:12.08</td><td>FAT</td><td class="num">1</td><td>LD</td></tr>
+          <tr><td class="warn">⚠ No athlete named "Ava Chenn"</td><td class="num">4/12/2027</td><td>Region</td><td>400m</td><td>Ava Chenn</td><td class="num">59.87</td><td>FAT</td><td class="num">3</td><td>JT</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">More columns: Wind, Round, Relay Runners (in order, separated by commas), and Note. Event and Athlete have drop-down lists from your events and roster.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>How it flows</h3>
+        <ol>
+          <li>An assistant adds a row: date, meet, event, athlete (or Girls A / Boys A for a relay), and the time or mark.</li>
+          <li>On the next sync Fieldside checks every new row and writes a <b>Status</b>: "Waiting for coach review", or ⚠ and what to fix, such as a name not on the roster or a mark it can't read. Whoever typed it fixes the row, and it's checked again.</li>
+          <li>You open <b>Google Sheets → Review Results from the Sheet</b>. The Track &amp; Field screen shows how many are waiting. Rows are grouped by meet; a meet the app doesn't have yet is marked <b>New meet</b> and created when you import.</li>
+          <li>Tap a row to leave it out, then <b>Import</b>. Imported rows are marked <b>Imported ✓</b> in the sheet and never come in twice.</li>
+        </ol>
+      </div>
+      <div class="feature">
+        <h3>Corrections</h3>
+        <ul>
+          <li>To fix a mark, add a new row for the same athlete, event, meet, and round. The review shows <b>Replaces 12.34</b> so you know it changes a result already in the app.</li>
+          <li>If someone edits a row while you're reviewing it, that row is skipped and shows up again next time, so you always import what you saw.</li>
+          <li>Results typed into Add Results are <b>official</b>. To clear a <b>*</b>, add the result from the meet's official results, even if it's the same mark.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="new-page" id="coaches">
+    <div class="section-head">
+      <span class="chapter">Track &amp; Field</span>
+      <div class="when">Two or more coaches</div>
+      <h2>One team, shared through the head coach's sheet</h2>
+      <p>The head coach's Fieldside is the master copy. Other coaches with Fieldside <b>connect</b> to the head coach's Google Sheet: it <b>loads</b> the team into their app and <b>sends</b> their own results back for the head coach to approve. Coaches without the app can type results straight into the sheet.</p>
+    </div>
+
+    <div class="flow" aria-label="Head coach's app syncs to the Google Sheet; another coach's app loads from it and sends results to its Add Results tab">
+      <div class="node head">
+        <div class="who">Head coach's Fieldside</div>
+        <p>The master copy: roster, meets, results, relays, and PRs.</p>
+        <ul>
+          <li>Reviews and imports results from Add Results</li>
+          <li>Shares the sheet in Google</li>
+        </ul>
+      </div>
+      <div class="arrows">
+        <div class="arrow green"><span>Sync</span><span class="line h">⟶</span><span class="line v">↓</span><span>writes the sheet</span></div>
+        <div class="arrow orange"><span class="line h">⟵</span><span class="line v">↑</span><span>Review &amp; import</span></div>
+      </div>
+      <div class="node sheet">
+        <div class="who">Google Sheet</div>
+        <p>In the head coach's Drive.</p>
+        <div class="tabs">
+          <span>How to Use</span><span class="edit">Add Results</span><span>PR Board</span><span>Relays</span><span>Rankings</span><span>Meets</span><span class="hid">Fieldside Data (hidden)</span>
+        </div>
+        <p style="color:var(--muted)">Only <b style="color:var(--signal)">Add Results</b> is for typing in. The other tabs are rewritten on each sync.</p>
+      </div>
+      <div class="arrows">
+        <div class="arrow green"><span>Load</span><span class="line h">⟶</span><span class="line v">↓</span><span>team into the app</span></div>
+        <div class="arrow orange"><span class="line h">⟵</span><span class="line v">↑</span><span>Send</span><span>new results to Add Results</span></div>
+      </div>
+      <div class="node assistant">
+        <div class="who">Another coach's Fieldside</div>
+        <p>Times practice and meets with the same roster.</p>
+        <ul>
+          <li>Sees the PR Board, rankings, and history</li>
+          <li>Their results go to the head coach for approval</li>
+        </ul>
+      </div>
+    </div>
+    <div class="below">
+      <div class="typist">
+        <div class="arrow orange"><span class="line">↑</span><span>types rows</span></div>
+        <div class="card"><b>Coaches without the app</b><br>Edit the Add Results tab in Google Sheets.</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h3>Setting it up</h3>
+    </div>
+    <div class="steps">
+      <div class="step head">
+        <span class="num">1 · Head coach</span>
+        <ol>
+          <li>Track &amp; Field → Google Sheets → <b>Sign In with Google</b> → <b>Start My Team's Sheet</b>.</li>
+          <li>Open the sheet, tap <b>Share</b>, and add each coach's Google account as an <b>Editor</b>.</li>
+          <li>In Fieldside tap <b>Copy Sheet Link</b> and text it to the coaches.</li>
+        </ol>
+      </div>
+      <div class="step assistant">
+        <span class="num">2 · Other coach</span>
+        <ol>
+          <li>Track &amp; Field → Google Sheets → <b>Sign In with Google</b> with the account the sheet was shared with.</li>
+          <li>Paste the link under <b>Connect to Head Coach's Sheet</b>.</li>
+          <li>Google asks once to let Fieldside open sheets shared with you. Allow it.</li>
+        </ol>
+      </div>
+      <div class="step assistant">
+        <span class="num">3 · Every sync</span>
+        <ol>
+          <li><b>Load:</b> the head coach's roster, meets, results, relays, and PRs come in.</li>
+          <li><b>Send:</b> your new track results go to Add Results, marked with your name.</li>
+          <li>The head coach reviews and imports them; on your next sync they're the head coach's.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Good to know</h3>
+        <ul>
+          <li><b>The head coach's version wins.</b> Loading updates what the head coach changed and adds what's new. It never deletes anything in the other coach's app.</li>
+          <li>Athletes and meets match by name, so a coach who already had the roster won't get doubles. Their own results that the head coach already has aren't sent back.</li>
+          <li>Changing a result you already sent sends it again; the head coach sees <b>Replaces …</b> when reviewing.</li>
+          <li>Sync runs on <b>Sync Now</b>, and automatically when you leave the app if the phone is online.</li>
+          <li>Practice and cross country stay on each coach's own phone; only track and field results are shared this way.</li>
+          <li>Only the head coach's account needs the sheet in their Drive. Every coach who signs in to Fieldside with Google must be on the app's tester list during the beta.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="when">After · cross country</div>
+      <h2>Results and records, kept for you</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>Race results</h3>
+        <ul>
+          <li>Places, every split, the time between splits, finish, and pace per mile or kilometer. Missing times show as "—".</li>
+          <li>Times timed or typed in the app carry a <b>*</b> as <b>preliminary</b>. Official times have no star: imported from the meet's results file, typed into the sheet's Add Results tab, or typed in the app with <b>From Official Results</b> on.</li>
+          <li>Type in a missing time, or <b>import the official results</b> file from the meet. Runners are matched by bib and name, and added times are labeled so you know where they came from.</li>
+          <li>Turn an unknown runner into a roster athlete, or link them to someone you already have.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Your team</h3>
+        <ul>
+          <li>Each race shows your <b>scoring five</b> and your 6th and 7th runners, with how far each is behind the 5th.</li>
+          <li><b>Top-5 average</b> and <b>1–5 spread</b> (the gap from your first to your fifth runner), plus the spread at every split so you can see where the pack broke up.</li>
+          <li><b>Team score</b> from your top five's overall places. Type the places in or import them with the official results.</li>
+          <li>A <b>season trend</b> compares every race with the same name, such as all your Varsity Girls races.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>PRs and history</h3>
+        <ul>
+          <li>Season records (SR) and personal records (PR) update themselves. A new best gets a badge in the results.</li>
+          <li>Each athlete has a history for every event with a progress chart. Leave a time out of PRs if the course was short or the timing was off.</li>
+          <li><b>Team Bests</b> ranks your athletes in any event, for a season or all time, by gender, level, or team.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Export</h3>
+        <ul>
+          <li>Send any race, meet, athlete, or season to a spreadsheet (CSV) by email, AirDrop, or Files. Opens in Excel, Numbers, or Google Sheets.</li>
+          <li><b>Export Season Workbook</b> on the Cross Country screen makes one Excel file for the season. See the next page.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="xc-sheet">
+    <div class="section-head">
+      <span class="chapter">Cross Country</span>
+      <div class="when">Sharing</div>
+      <h2>The Cross Country sheet</h2>
+      <p>Cross country has its own Excel workbook and its own Google Sheet, separate from the Track &amp; Field sheet. It works the same way: the app keeps it up to date, assistants add finish times in its <b>Add Results</b> tab, and other coaches with Fieldside can connect to it. Only meet races go in; training runs stay in the app.</p>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet" aria-label="Example meet tab in the Cross Country sheet">
+        <thead><tr><th>Place</th><th>Overall</th><th>Last</th><th>First</th><th>Grade</th><th>Time</th><th>Pace</th><th>PR / SB</th><th>1 mi</th><th>2 mi</th></tr></thead>
+        <tbody>
+          <tr><td colspan="10"><b>Varsity Girls · 5K · Home 5K · splits at 1 mi, 2 mi</b></td></tr>
+          <tr><td class="num">1</td><td class="num">4</td><td>Alvarez</td><td>Maya</td><td class="num">12</td><td class="num">19:12.00</td><td class="num">3:50/km</td><td><b>PR</b></td><td class="num">5:57.80</td><td class="num">12:10.50</td></tr>
+          <tr><td class="num">2</td><td class="num">7</td><td>Chen</td><td>Ava</td><td class="num">11</td><td class="num">19:29.00*</td><td class="num">3:54/km</td><td><b>PR</b></td><td class="num">6:03.10</td><td class="num">12:21.20</td></tr>
+          <tr><td class="num">3</td><td class="num">10</td><td>Evans</td><td>Sofia</td><td class="num">10</td><td class="num">19:57.00*</td><td class="num">3:59/km</td><td><b>SB</b></td><td class="num">6:11.80</td><td class="num">12:39.00</td></tr>
+          <tr><td colspan="10"><b>Team</b> · Top 5 1:39:34.00 · Avg 19:54.80 · 1–5 spread 1:30.00 · Score 50</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">A meet tab: each race with team place, overall place, time, pace, PR or SB, and the time at each split, then the team line. A <b>*</b> marks a preliminary time; a note under the tab says so. Sample names.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>What's in it</h3>
+        <ul>
+          <li><b>PR Board:</b> one row per runner. For every distance they've raced (5K, 2 mi…): the season best (<b>SB</b>), then the <b>PR</b> with its date and course.</li>
+          <li><b>Girls Rankings</b> and <b>Boys Rankings:</b> each distance, fastest first.</li>
+          <li><b>A tab per meet</b> this season, newest first, like the one above. A team with fewer than five finishers shows how many finished.</li>
+          <li><b>Courses:</b> every runner's best on each course, girls then boys. <b>CR</b> marks the course record.</li>
+          <li>The Google Sheet also has <b>How to Use</b> and <b>Add Results</b> tabs, and a hidden data tab for other coaches' apps.</li>
+          <li><b>Preliminary and official:</b> a time recorded in Fieldside has a <b>*</b> until it comes from the meet's official results: the results file, a row in Add Results, or typed in the app with <b>From Official Results</b> on. The same goes for the Track &amp; Field sheet.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Set it up</h3>
+        <ul>
+          <li><b>Excel:</b> Cross Country → <b>Export Season Workbook</b>.</li>
+          <li><b>Google Sheets:</b> Cross Country → <b>Google Sheets</b> → <b>Start My Team's Sheet</b>. If you already signed in for Track &amp; Field, you're signed in here too.</li>
+          <li>It syncs when you tap <b>Sync Now</b> and when you leave the app, if anything changed. <b>Start a New Sheet</b> each season.</li>
+          <li>Share it with Google's <b>Share</b> button. It holds athletes' names and times, so share it only with people who should see them.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet" aria-label="Example Add Results tab in the Cross Country sheet">
+        <thead><tr><th>Status</th><th>Date</th><th>Meet</th><th>Race</th><th>Distance</th><th>Athlete</th><th>Finish Time</th><th>Place</th></tr></thead>
+        <tbody>
+          <tr><td class="ok">Imported ✓ Oct 31</td><td class="num">10/31/2026</td><td>Sectionals</td><td>Varsity Girls</td><td>5K</td><td>Maya Alvarez</td><td class="num">19:05.4</td><td class="num">6</td></tr>
+          <tr><td>Waiting for coach review</td><td class="num">10/31/2026</td><td>Sectionals</td><td>Varsity Boys</td><td>5K</td><td>Jordan Brooks</td><td class="num">16:18.9</td><td class="num">3</td></tr>
+          <tr><td class="warn">⚠ No athlete named "Liam Davies"</td><td class="num">10/31/2026</td><td>Sectionals</td><td>Varsity Boys</td><td></td><td>Liam Davies</td><td class="num">16:41.2</td><td class="num">8</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">More columns: Course, Entered By, and Note. Race, Distance, Course, and Athlete have drop-down lists.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>Assistants add finish times</h3>
+        <ul>
+          <li>One row per runner: date, meet, race (like Varsity Girls), athlete, and finish time. Write <b>DNF</b> for a runner who didn't finish.</li>
+          <li>A new meet needs a date. A new race needs a <b>Distance</b> (like 5K or 2 mi), or a course the app knows. A new course name becomes a new course.</li>
+          <li>Review them in <b>Cross Country → Google Sheets → Review Results from the Sheet</b>, grouped by meet and race. New meets and races are marked, and a row for a runner who already has a time shows <b>Replaces 19:12.00</b>.</li>
+          <li>Times typed here are <b>official</b>. To clear a runner's <b>*</b>, add their time from the official results, even if it's the same.</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <h3>Other coaches with Fieldside</h3>
+        <ul>
+          <li>Same as Track &amp; Field: share the sheet with them as an Editor and send the link. In their app: Cross Country → Google Sheets → <b>Connect to Head Coach's Sheet</b>.</li>
+          <li>Sync loads your roster, courses, meets, races, splits, and PRs into their app, and sends the finish times they record to Add Results for you to approve. Those rows say <b>Sent from Fieldside</b> and stay preliminary.</li>
+          <li>The Track &amp; Field and Cross Country sheets are connected separately, so an assistant can help with one or both.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="when">Why you can trust the times</div>
+      <h2>Built for the start line</h2>
+    </div>
+    <div class="trust">
+      <div><b>Works without signal</b><span>Timing, imports, and merging two phones by AirDrop all work offline. Only Google Sheets needs a connection, and it catches up when you're back online.</span></div>
+      <div><b>Survives a crash</b><span>If the app closes mid-race, it reopens with the clock still running and every time kept.</span></div>
+      <div><b>Fingertip accurate</b><span>Times are taken when your finger touches the screen, not when it lifts.</span></div>
+      <div><b>Track rounding</b><span>Times are shown to hundredths and round up, so a hand time never looks faster than it was.</span></div>
+      <div><b>Screen stays on</b><span>The phone doesn't go to sleep while you're timing.</span></div>
+      <div><b>Your data stays yours</b><span>Results live on your phone and in its iCloud backup. The Google Sheet is in your own Drive, and Fieldside can't see your other files.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="when">Roadmap</div>
+      <h2>What's next</h2>
+    </div>
+    <div class="road">
+      <div class="road-row">
+        <div class="label">Now</div>
+        <ul>
+          <li>TestFlight beta: track meets, imports, the PR Board, stacking a meet, and Google Sheets shared between coaches.</li>
+          <li>The Cross Country and Practice Google Sheets and workbooks.</li>
+          <li>Google is reviewing the Google Sheets sign-in so any coach can connect. Until it's approved, only invited accounts can.</li>
+        </ul>
+      </div>
+      <div class="road-row">
+        <div class="label">Later</div>
+        <ul>
+          <li>Bringing results in straight from a MileSplit or Athletic.net results page.</li>
+          <li>Live sync, so start, split, and finish phones share one race clock in real time.</li>
+          <li>Read bib numbers from photos to suggest the runner automatically.</li>
+          <li>Start and stop from outside equipment such as a Bluetooth button or timing gate.</li>
+          <li>Maybe a team website with rankings and results, if the Google Sheet isn't enough.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>Tested on the iPhone simulator, and cross country timing at real races. Track imports were checked against real meet results, and the Track &amp; Field Google Sheet with a real Google account. Updated November 2026.</footer>
+</div>
+</body>
+</html>
